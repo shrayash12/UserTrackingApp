@@ -38,6 +38,37 @@ public class MainActivity extends AppCompatActivity {
         log_Tv_ForgotPassword = findViewById(R.id.log_Tv_ForgotPassword);
         log_Btn_Register = findViewById(R.id.log_Btn_Register);
 
+        mAuth = FirebaseAuth.getInstance();
 
+        btn_LogIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signInWithEmailAndPassword(log_EmailAddress.getText().toString(),
+                        log_Password.getText().toString()).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(MainActivity.this, "log in successful", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Log in failed You are not a registered user please Register first", Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                });
+                // Log.d(MainActivity.class.getSimpleName(), "btn_LogIn Clicked");
+            }
+        });
+
+        log_Btn_Register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switch (v.getId()) {
+                    case R.id.log_Btn_Register:
+                        startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                        //Log.d(MainActivity.class.getSimpleName(), "btn Register clicked");
+                        break;
+                }
+            }
+        });
     }
 }
