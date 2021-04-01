@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     Button log_Btn_Register;
     ProgressBar log_ProgressBar;
     private FirebaseAuth mAuth;
+    FirebaseUser firebaseUser;
 
 
     @Override
@@ -41,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         log_Tv_ForgotPassword = findViewById(R.id.log_Tv_ForgotPassword);
         log_Btn_Register = findViewById(R.id.log_Btn_Register);
         log_ProgressBar = findViewById(R.id.log_ProgressBar);
-
         mAuth = FirebaseAuth.getInstance();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         btn_LogIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +64,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        log_Tv_ForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
+            }
+        });
     }
 
     private void signInUser() {
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            log_EmailAddress.setError("plese enter valid email");
+            log_EmailAddress.setError("please enter valid email");
             log_EmailAddress.requestFocus();
             return;
         }
@@ -97,13 +104,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
                     if (firebaseUser.isEmailVerified()) {
                         startActivity(new Intent(MainActivity.this, UserProfile.class));
-                       // Toast.makeText(MainActivity.this, "log in successful", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MainActivity.this, "log in successful", Toast.LENGTH_SHORT).show();
 
                     } else {
-                       firebaseUser.sendEmailVerification();
+                        firebaseUser.sendEmailVerification();
                         Toast.makeText(MainActivity.this, "CHECK YOUR MAIL TO VERIFY YOUR EMAIL ACCOUNT", Toast.LENGTH_SHORT).show();
                     }
                 } else {
