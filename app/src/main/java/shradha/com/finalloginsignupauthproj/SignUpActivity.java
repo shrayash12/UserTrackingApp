@@ -2,17 +2,20 @@ package shradha.com.finalloginsignupauthproj;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -40,7 +43,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
         });
-
     }
 
     private void userRegistration() {
@@ -49,6 +51,7 @@ public class SignUpActivity extends AppCompatActivity {
         reg_Age = findViewById(R.id.reg_Age);
         reg_Email = findViewById(R.id.reg_Email);
         reg_Password = findViewById(R.id.reg_Password);
+
         String userName = reg_Name.getText().toString();
         String userAge = reg_Age.getText().toString();
         String userEmail = reg_Email.getText().toString();
@@ -86,14 +89,13 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-
         // Log.d(SignUpActivity.class.getSimpleName(), "SignUp Button Clicked");
         mAuth.createUserWithEmailAndPassword(reg_Email.getText().toString(),
                 reg_Password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    User user = new User( userName, userAge, userEmail);
+                    User user = new User(userName, userAge, userEmail);
                     FirebaseDatabase.getInstance().getReference("User")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
                             .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -101,6 +103,7 @@ public class SignUpActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
                                 Toast.makeText(SignUpActivity.this, "USER HAS BEEN SUCCESSFULLY REGISTERED", Toast.LENGTH_LONG).show();
+
                             } else {
                                 Toast.makeText(SignUpActivity.this, "Failed to register! Please try again ", Toast.LENGTH_LONG).show();
 
@@ -113,7 +116,7 @@ public class SignUpActivity extends AppCompatActivity {
                             Toast.makeText(SignUpActivity.this, "Failed to register", Toast.LENGTH_LONG).show();
 
                         }
-                    });;
+                    });
 
                 } else {
                     Toast.makeText(SignUpActivity.this, "Failed to register", Toast.LENGTH_LONG).show();
