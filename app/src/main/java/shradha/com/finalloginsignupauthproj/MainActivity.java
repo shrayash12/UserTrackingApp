@@ -99,10 +99,11 @@ public class MainActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                     if (firebaseUser.isEmailVerified()) {
-                        Toast.makeText(MainActivity.this, "log in successful", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, UserProfile.class));
+                       // Toast.makeText(MainActivity.this, "log in successful", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        firebaseUser.sendEmailVerification();
+                       firebaseUser.sendEmailVerification();
                         Toast.makeText(MainActivity.this, "CHECK YOUR MAIL TO VERIFY YOUR EMAIL ACCOUNT", Toast.LENGTH_SHORT).show();
                     }
                 } else {
