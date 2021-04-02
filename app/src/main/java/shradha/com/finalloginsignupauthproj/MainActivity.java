@@ -104,8 +104,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-
-                    if (firebaseUser.isEmailVerified()) {
+                    startActivity(new Intent(MainActivity.this, UserProfile.class));
+                }
+        /*            if (firebaseUser.isEmailVerified()) {
                         startActivity(new Intent(MainActivity.this, UserProfile.class));
                         // Toast.makeText(MainActivity.this, "log in successful", Toast.LENGTH_SHORT).show();
 
@@ -113,11 +114,14 @@ public class MainActivity extends AppCompatActivity {
                         firebaseUser.sendEmailVerification();
                         Toast.makeText(MainActivity.this, "CHECK YOUR MAIL TO VERIFY YOUR EMAIL ACCOUNT", Toast.LENGTH_SHORT).show();
                     }
-                } else {
+                }*/
+                else {
                     Toast.makeText(MainActivity.this, "Log in failed You are not a registered user please Register first", Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
+
     }
+  
 }
