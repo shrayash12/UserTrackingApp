@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText reg_Name;
@@ -26,6 +27,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText reg_Password;
     Button btn_SignUp;
 
+    FirebaseFirestore db;
     private FirebaseAuth mAuth;
 
     @Override
@@ -35,6 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         User user;
         btn_SignUp = findViewById(R.id.btn_SignUp);
+        db = FirebaseFirestore.getInstance();
 
 
         btn_SignUp.setOnClickListener(new View.OnClickListener() {
