@@ -13,12 +13,17 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText reg_Name;
@@ -27,7 +32,7 @@ public class SignUpActivity extends AppCompatActivity {
     EditText reg_Password;
     Button btn_SignUp;
 
-    FirebaseFirestore db;
+    FirebaseFirestore firestore;
     private FirebaseAuth mAuth;
 
     @Override
@@ -37,7 +42,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         User user;
         btn_SignUp = findViewById(R.id.btn_SignUp);
-        db = FirebaseFirestore.getInstance();
+        firestore = FirebaseFirestore.getInstance();
 
 
         btn_SignUp.setOnClickListener(new View.OnClickListener() {
@@ -95,45 +100,27 @@ public class SignUpActivity extends AppCompatActivity {
 
         // Log.d(SignUpActivity.class.getSimpleName(), "SignUp Button Clicked");
         mAuth.createUserWithEmailAndPassword(reg_Email.getText().toString(),
-                reg_Password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                reg_Password.getText().toString()).addOnSuccessListener(SignUpActivity.this, new OnSuccessListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    User user = new User(userName, userAge, userEmail);
-                    FirebaseDatabase.getInstance().getReference("User")
-                            .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
-                            .setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(SignUpActivity.this, "USER HAS BEEN SUCCESSFULLY REGISTERED", Toast.LENGTH_LONG).show();
-
-                            } else {
-                                Toast.makeText(SignUpActivity.this, "Failed to register! Please try again ", Toast.LENGTH_LONG).show();
-
-                            }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-
-                            Toast.makeText(SignUpActivity.this, "Failed to register", Toast.LENGTH_LONG).show();
-
-                        }
-                    });
-
-                } else {
-                    Toast.makeText(SignUpActivity.this, "Failed to register", Toast.LENGTH_LONG).show();
-                }
+            public void onSuccess(AuthResult authResult) {
+                FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                DocumentReference documentReference = firestore.collection("User").document(firebaseUser.getUid());
+                Map<String, Object> userInfo = new HashMap<>();
+                userInfo.put("UseName", reg_Name.getText().toString());
+                userInfo.put("UseAge", reg_Age.getText().toString());
+                userInfo.put("UserEmail", reg_Email.getText().toString());
+                userInfo.put("isUser", 1);
+                documentReference.set(userInfo);
+                startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                finish();
             }
-        }).addOnFailureListener(new OnFailureListener() {
+        }).addOnFailureListener(SignUpActivity.this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-
-                Toast.makeText(SignUpActivity.this, "Failed to register", Toast.LENGTH_LONG).show();
-
+                Toast.makeText(SignUpActivity.this, "Fail to create account", Toast.LENGTH_SHORT).show();
             }
         });
+
     }
 
 
