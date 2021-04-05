@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -16,10 +17,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
     EditText log_EmailAddress;
@@ -29,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Button log_Btn_Register;
     ProgressBar log_ProgressBar;
     private FirebaseAuth mAuth;
+    FirebaseFirestore firestore;
     FirebaseUser firebaseUser;
 
 
@@ -43,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         log_Btn_Register = findViewById(R.id.log_Btn_Register);
         log_ProgressBar = findViewById(R.id.log_ProgressBar);
         mAuth = FirebaseAuth.getInstance();
+        firestore = FirebaseFirestore.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         btn_LogIn.setOnClickListener(new View.OnClickListener() {
@@ -99,29 +107,36 @@ public class MainActivity extends AppCompatActivity {
 
         log_ProgressBar.setVisibility(View.VISIBLE);
 
-        mAuth.signInWithEmailAndPassword(log_EmailAddress.getText().toString(),
-                log_Password.getText().toString()).addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(MainActivity.this, new OnSuccessListener<AuthResult>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    startActivity(new Intent(MainActivity.this, UserProfile.class));
-                }
-        /*            if (firebaseUser.isEmailVerified()) {
-                        startActivity(new Intent(MainActivity.this, UserProfile.class));
-                        // Toast.makeText(MainActivity.this, "log in successful", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        firebaseUser.sendEmailVerification();
-                        Toast.makeText(MainActivity.this, "CHECK YOUR MAIL TO VERIFY YOUR EMAIL ACCOUNT", Toast.LENGTH_SHORT).show();
-                    }
-                }*/
-                else {
-                    Toast.makeText(MainActivity.this, "Log in failed You are not a registered user please Register first", Toast.LENGTH_SHORT).show();
-                }
+            public void onSuccess(AuthResult authResult) {
+                Toast.makeText(MainActivity.this, "LogIn Successfully", Toast.LENGTH_SHORT).show();
+                checkUserAccessLevel();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
 
             }
         });
 
     }
-  
+
+    private void checkUserAccessLevel(String uId) {
+        DocumentReference documentReference = firestore.collection("User").document(firebaseUser.getUid());
+        documentReference.get().addOnSuccessListener(MainActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                Log.d(MainActivity.class.getSimpleName(), "SuccessFull");
+                if (documentSnapshot.getString("Admin") != null) ;
+                //user is Admin
+                startActivity(new Intent(MainActivity.this,Admin.class));
+                finish();
+                if (documentSnapshot.getString("user")!= null){
+                    // this is User
+                }
+            }
+        });
+    }
+
 }
