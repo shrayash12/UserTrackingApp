@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(MainActivity.this, "LogIn Successfully", Toast.LENGTH_SHORT).show();
-                checkUserAccessLevel();
+                checkUserAccessLevel(authResult.getUser().getUid());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -127,13 +127,15 @@ public class MainActivity extends AppCompatActivity {
         documentReference.get().addOnSuccessListener(MainActivity.this, new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d(MainActivity.class.getSimpleName(), "SuccessFull");
+                Log.d(MainActivity.class.getSimpleName(), "SuccessFull"+documentSnapshot.getData());
                 if (documentSnapshot.getString("Admin") != null) ;
                 //user is Admin
                 startActivity(new Intent(MainActivity.this,Admin.class));
                 finish();
                 if (documentSnapshot.getString("user")!= null){
                     // this is User
+                    startActivity(new Intent(MainActivity.this,UserProfile.class));
+
                 }
             }
         });
