@@ -109,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                 userInfo.put("UseName", reg_Name.getText().toString());
                 userInfo.put("UseAge", reg_Age.getText().toString());
                 userInfo.put("UserEmail", reg_Email.getText().toString());
-                userInfo.put("isUser", 1);
+                userInfo.put("User", 1);
                 documentReference.set(userInfo);
                 startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                 finish();
