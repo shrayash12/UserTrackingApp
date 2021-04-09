@@ -10,6 +10,15 @@
     android:layout_marginLeft="20dp"
     android:padding="10dp"
     >
+
+    <TextView
+        android:id="@+id/tvTitle_User"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/design_default_color_primary_dark"
+        android:textSize="30sp"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/tv_NameTitle"
         android:layout_width="wrap_content"
