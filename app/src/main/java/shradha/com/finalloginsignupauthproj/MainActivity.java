@@ -116,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Toast.makeText(MainActivity.this, "LogIn Failed", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkUserAccessLevel(String uId) {
+        FirebaseUser firebaseUser = mAuth.getCurrentUser();
         DocumentReference documentReference = firestore.collection("User").document(firebaseUser.getUid());
         documentReference.get().addOnSuccessListener(MainActivity.this, new OnSuccessListener<DocumentSnapshot>() {
             @Override
@@ -132,13 +134,14 @@ public class MainActivity extends AppCompatActivity {
                 //user is Admin
                 startActivity(new Intent(MainActivity.this,Admin.class));
                 finish();
-                if (documentSnapshot.getString("user")!= null){
+                if (documentSnapshot.getString("User")!= null){
                     // this is User
-                    startActivity(new Intent(MainActivity.this,UserProfile.class));
+                    startActivity(new Intent(MainActivity.this,UserClientActivity.class));
 
                 }
             }
         });
+
     }
 
 }
