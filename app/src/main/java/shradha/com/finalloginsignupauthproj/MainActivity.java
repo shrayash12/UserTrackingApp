@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     EditText log_Password;
     Button btn_LogIn;
     TextView log_Tv_ForgotPassword;
-    Button log_Btn_Register;
+    TextView log_Btn_Register;
     ProgressBar log_ProgressBar;
     private FirebaseAuth mAuth;
     FirebaseFirestore firestore;
@@ -42,13 +42,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_sign_in);
         log_EmailAddress = findViewById(R.id.log_EmailAddress);
         log_Password = findViewById(R.id.log_Password);
         btn_LogIn = findViewById(R.id.btn_LogIn);
         log_Tv_ForgotPassword = findViewById(R.id.log_Tv_ForgotPassword);
         log_Btn_Register = findViewById(R.id.log_Btn_Register);
-        log_ProgressBar = findViewById(R.id.log_ProgressBar);
+      //  log_ProgressBar = findViewById(R.id.log_ProgressBar);
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        log_ProgressBar.setVisibility(View.VISIBLE);
+    //    log_ProgressBar.setVisibility(View.VISIBLE);
 
         mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(MainActivity.this, new OnSuccessListener<AuthResult>() {
             @Override

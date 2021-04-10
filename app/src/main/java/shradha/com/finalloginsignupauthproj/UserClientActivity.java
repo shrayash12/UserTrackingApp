@@ -22,16 +22,16 @@ public class UserClientActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     TextView tv_UserName;
-    TextView tv_UserAge;
-    TextView tv_UserEmail;
+    // TextView tv_UserAge;
+    // TextView tv_UserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_client);
+        setContentView(R.layout.activity_user);
         tv_UserName = findViewById(R.id.tv_UserName);
-        tv_UserAge = findViewById(R.id.tv_UserAge);
-        tv_UserEmail = findViewById(R.id.tv_UserEmail);
+        // tv_UserAge = findViewById(R.id.tv_UserAge);
+        //  tv_UserEmail = findViewById(R.id.tv_UserEmail);
 
         Toast.makeText(this, "Welcome User", Toast.LENGTH_SHORT).show();
 
@@ -51,9 +51,9 @@ public class UserClientActivity extends AppCompatActivity {
                         String userAge = documentSnapshot.getString(Constants.KEY_AGE);
                         String userEmail = documentSnapshot.getString(Constants.KEY_EMAIL);
 
-                        tv_UserName.setText(userName);
-                        tv_UserAge.setText(""+userAge);
-                        tv_UserEmail.setText(userEmail);
+                        tv_UserName.setText("Hello " + userName + ", Welcome to Scarlet It Solution");
+                        //tv_UserAge.setText(""+userAge);
+                        //  tv_UserEmail.setText(userEmail);
 
 
                     } else {

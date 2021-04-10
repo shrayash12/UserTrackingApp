@@ -13,6 +13,8 @@
         <activity android:name=".UserProfile" />
         <activity android:name=".ForgotPasswordActivity" />
         <activity android:name=".SignUpActivity" />
+        <activity android:name=".UserClientActivity" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

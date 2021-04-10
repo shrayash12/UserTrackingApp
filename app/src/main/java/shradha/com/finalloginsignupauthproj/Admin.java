@@ -2,6 +2,8 @@ package shradha.com.finalloginsignupauthproj;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Admin extends AppCompatActivity {
@@ -27,11 +30,17 @@ public class Admin extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     DocumentReference documentReference;
+    RecyclerView recyclerView;
+    UserListAdapter userListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
+        recyclerView = findViewById(R.id.list);
+        userListAdapter = new UserListAdapter();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(userListAdapter);
         Toast.makeText(this, "Welcome Admin!!!!", Toast.LENGTH_SHORT).show();
         btn_LogOut = findViewById(R.id.btn_LogOut);
         mAuth = FirebaseAuth.getInstance();
@@ -55,9 +64,7 @@ public class Admin extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             List<DocumentSnapshot> documentSnapshots1 =  task.getResult().getDocuments();
-                            for (int i  = 0; i < documentSnapshots1.size();i++) {
-                                Log.d(Admin.class.getSimpleName(), documentSnapshots1.get(i).getId() + " => " + documentSnapshots1.get(i).getData());
-                            }
+                            userListAdapter.setList(documentSnapshots1);
 
                         } else {
                             Log.d(Admin.class.getSimpleName(), "Error getting documents: ", task.getException());
