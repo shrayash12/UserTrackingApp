@@ -1,98 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/background"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_marginTop="20dp"
+       android:orientation="horizontal">
 
 
-    <TextView
-        android:id="@+id/today"
-        android:layout_width="wrap_content"
-        android:text="Today"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:textSize="30sp"
-        android:layout_marginLeft="16dp"
-        android:textColor="@color/white"
-        android:layout_height="wrap_content"/>
+
+       <TextView
+           android:id="@+id/today"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="16dp"
+           android:text="Today"
+           android:textColor="@color/white"
+           android:textSize="30sp"
+           android:layout_weight="1"
+           android:textStyle="bold" />
+       <androidx.appcompat.widget.AppCompatButton
+           android:id="@+id/btn_User_LogOut"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_gravity="right"
+           android:layout_marginLeft="20dp"
+           android:layout_marginRight="20dp"
+           android:background="@color/white"
+           android:text="LOG OUT"
+           android:textColor="@color/button_background" />
+
+   </LinearLayout>
+
 
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
-        android:text="11th of June"
-        android:textSize="15sp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:text="11th of June"
         android:textColor="@color/white"
-        android:layout_height="wrap_content"/>
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tv_UserName"
         android:layout_width="wrap_content"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
         android:textColor="@color/white"
-        android:layout_height="wrap_content"/>
+        android:textSize="15sp" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:gravity="center_horizontal"
         android:layout_marginTop="30dp"
-        android:layout_height="wrap_content">
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginRight="100dp"
             android:gravity="center_horizontal"
-            android:padding="5dp"
-            android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="START"
-                android:textColor="@color/white"
 
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="13:00"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="20sp"
 
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal"
-            android:padding="5dp"
-            android:layout_height="wrap_content">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="END"
-                android:textColor="@color/white"
 
-                android:layout_height="wrap_content"/>
+                android:textColor="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="21:00"
                 android:textColor="@color/white"
-                android:textStyle="bold"
                 android:textSize="20sp"
 
-                android:layout_height="wrap_content"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -102,11 +122,12 @@
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
-        android:textColor="@color/button_background"
         android:background="@color/white"
-        android:text="START SHIFT" />
+        android:text="START SHIFT"
+        android:textColor="@color/button_background" />
+
 
 </LinearLayout>

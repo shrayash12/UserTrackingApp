@@ -3,9 +3,12 @@ package shradha.com.finalloginsignupauthproj;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +25,7 @@ public class UserClientActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     TextView tv_UserName;
+    Button btn_User_LogOut;
     // TextView tv_UserAge;
     // TextView tv_UserEmail;
 
@@ -30,6 +34,8 @@ public class UserClientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
         tv_UserName = findViewById(R.id.tv_UserName);
+        btn_User_LogOut = findViewById(R.id.btn_User_LogOut);
+
         // tv_UserAge = findViewById(R.id.tv_UserAge);
         //  tv_UserEmail = findViewById(R.id.tv_UserEmail);
 
@@ -69,6 +75,13 @@ public class UserClientActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(UserClientActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        btn_User_LogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseAuth.getInstance().signOut();
+                startActivity(new Intent(UserClientActivity.this, MainActivity.class));
             }
         });
     }
