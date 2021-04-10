@@ -17,4 +17,19 @@ public class User {
         this.uId = uId;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getAge() {
+        return age;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getuId() {
+        return uId;
+    }
 }
