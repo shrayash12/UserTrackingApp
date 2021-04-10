@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -106,14 +107,15 @@ public class SignUpActivity extends AppCompatActivity {
                 FirebaseUser firebaseUser = mAuth.getCurrentUser();
                 DocumentReference documentReference = firestore.collection("User").document(firebaseUser.getUid());
                 Map<String, Object> userInfo = new HashMap<>();
-                userInfo.put("UseName", reg_Name.getText().toString());
-                userInfo.put("UseAge", reg_Age.getText().toString());
-                userInfo.put("UserEmail", reg_Email.getText().toString());
-                userInfo.put("User", 1);
+                userInfo.put(Constants.KEY_NAME, reg_Name.getText().toString());
+                userInfo.put(Constants.KEY_AGE, reg_Age.getText().toString());
+                userInfo.put(Constants.KEY_EMAIL, reg_Email.getText().toString());
                 documentReference.set(userInfo);
                 startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                 finish();
             }
+
+
         }).addOnFailureListener(SignUpActivity.this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
