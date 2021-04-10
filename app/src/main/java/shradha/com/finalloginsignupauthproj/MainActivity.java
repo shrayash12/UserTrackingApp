@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, "LogIn Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -129,14 +129,22 @@ public class MainActivity extends AppCompatActivity {
         documentReference.get().addOnSuccessListener(MainActivity.this, new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d(MainActivity.class.getSimpleName(), "SuccessFull"+documentSnapshot.getData());
-                if (documentSnapshot.getString("Admin") != null) ;
-                //user is Admin
-                startActivity(new Intent(MainActivity.this,Admin.class));
-                finish();
-                if (documentSnapshot.getString("User")!= null){
-                    // this is User
-                    startActivity(new Intent(MainActivity.this,UserClientActivity.class));
+                Log.d(MainActivity.class.getSimpleName(), "SuccessFull" + documentSnapshot.getData());
+
+                if (documentSnapshot.getData() != null) {
+                    String isAdmin = (String) documentSnapshot.getData().get("isAdmin");
+                    if (isAdmin != null && isAdmin.equals("1")) {
+                        //user is Admin
+                        startActivity(new Intent(MainActivity.this, Admin.class));
+                        finish();
+                    } else {
+                        startActivity(new Intent(MainActivity.this, UserClientActivity.class));
+                        finish();
+
+                    }
+                } else {
+                    startActivity(new Intent(MainActivity.this, UserClientActivity.class));
+                    finish();
 
                 }
             }
