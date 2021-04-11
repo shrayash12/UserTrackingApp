@@ -1,11 +1,10 @@
-package shradha.com.finalloginsignupauthproj;
+package shradha.com.finalloginsignupauthproj.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +20,12 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class UserClientActivity extends AppCompatActivity {
+import shradha.com.finalloginsignupauthproj.util.Constants;
+import shradha.com.finalloginsignupauthproj.R;
+import shradha.com.finalloginsignupauthproj.model.UserManager;
+import shradha.com.finalloginsignupauthproj.signin.SignInActivity;
+
+public class UserActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
     TextView tv_UserName;
@@ -46,7 +50,7 @@ public class UserClientActivity extends AppCompatActivity {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         DocumentReference documentReference = firestore.collection("User").document(firebaseUser.getUid());
 
-        documentReference.get().addOnCompleteListener(UserClientActivity.this, new OnCompleteListener<DocumentSnapshot>() {
+        documentReference.get().addOnCompleteListener(UserActivity.this, new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 DocumentSnapshot documentSnapshot = task.getResult();
@@ -63,25 +67,25 @@ public class UserClientActivity extends AppCompatActivity {
 
 
                     } else {
-                        Log.d(UserClientActivity.class.getSimpleName(), "No such document");
+                        Log.d(UserActivity.class.getSimpleName(), "No such document");
                     }
                 } else {
-                    Log.d(UserClientActivity.class.getSimpleName(), "get failed with ", task.getException());
+                    Log.d(UserActivity.class.getSimpleName(), "get failed with ", task.getException());
 
                 }
 
             }
-        }).addOnFailureListener(UserClientActivity.this, new OnFailureListener() {
+        }).addOnFailureListener(UserActivity.this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(UserClientActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(UserActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
         btn_User_LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserManager.getInstance(UserClientActivity.this).logOut();
-                startActivity(new Intent(UserClientActivity.this, MainActivity.class));
+                UserManager.getInstance(UserActivity.this).logOut();
+                startActivity(new Intent(UserActivity.this, SignInActivity.class));
             }
         });
     }

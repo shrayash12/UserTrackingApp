@@ -1,4 +1,4 @@
-package shradha.com.finalloginsignupauthproj;
+package shradha.com.finalloginsignupauthproj.model;
 
 public class User {
     public String userName;

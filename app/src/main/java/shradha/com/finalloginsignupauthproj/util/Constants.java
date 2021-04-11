@@ -1,4 +1,4 @@
-package shradha.com.finalloginsignupauthproj;
+package shradha.com.finalloginsignupauthproj.util;
 
 public class Constants {
     public static final String KEY_AGE = "UseAge";

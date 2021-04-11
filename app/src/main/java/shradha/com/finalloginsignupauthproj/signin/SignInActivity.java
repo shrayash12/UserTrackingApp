@@ -1,7 +1,6 @@
-package shradha.com.finalloginsignupauthproj;
+package shradha.com.finalloginsignupauthproj.signin;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,15 +12,11 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,7 +24,14 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class MainActivity extends AppCompatActivity {
+import shradha.com.finalloginsignupauthproj.forgetpassword.ForgotPasswordActivity;
+import shradha.com.finalloginsignupauthproj.R;
+import shradha.com.finalloginsignupauthproj.signup.SignUpActivity;
+import shradha.com.finalloginsignupauthproj.user.UserActivity;
+import shradha.com.finalloginsignupauthproj.model.UserManager;
+import shradha.com.finalloginsignupauthproj.admin.AdminActivity;
+
+public class SignInActivity extends AppCompatActivity {
     EditText log_EmailAddress;
     EditText log_Password;
     Button btn_LogIn;
@@ -52,14 +54,14 @@ public class MainActivity extends AppCompatActivity {
         log_Tv_ForgotPassword = findViewById(R.id.log_Tv_ForgotPassword);
         log_Btn_Register = findViewById(R.id.log_Btn_Register);
 
-        if (!UserManager.getInstance(MainActivity.this).getUserNameAndPassword().first.isEmpty()
-                && !UserManager.getInstance(MainActivity.this).getUserNameAndPassword().second.isEmpty()) {
-            if (UserManager.getInstance(MainActivity.this).isAdmin()) {
+        if (!UserManager.getInstance(SignInActivity.this).getUserNameAndPassword().first.isEmpty()
+                && !UserManager.getInstance(SignInActivity.this).getUserNameAndPassword().second.isEmpty()) {
+            if (UserManager.getInstance(SignInActivity.this).isAdmin()) {
                 //user is Admin
-                startActivity(new Intent(MainActivity.this, Admin.class));
+                startActivity(new Intent(SignInActivity.this, AdminActivity.class));
                 finish();
             } else {
-                startActivity(new Intent(MainActivity.this, UserClientActivity.class));
+                startActivity(new Intent(SignInActivity.this, UserActivity.class));
                 finish();
             }
         }
@@ -83,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 switch (v.getId()) {
                     case R.id.log_Btn_Register:
-                        startActivity(new Intent(MainActivity.this, SignUpActivity.class));
+                        startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                         //Log.d(MainActivity.class.getSimpleName(), "btn Register clicked");
                         break;
                 }
@@ -92,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
         log_Tv_ForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
+                startActivity(new Intent(SignInActivity.this, ForgotPasswordActivity.class));
             }
         });
     }
@@ -124,17 +126,17 @@ public class MainActivity extends AppCompatActivity {
 
         //    log_ProgressBar.setVisibility(View.VISIBLE);
 
-        mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(MainActivity.this, new OnSuccessListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(SignInActivity.this, new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                UserManager.getInstance(MainActivity.this).saveUserNamePassword(email, password);
-                Toast.makeText(MainActivity.this, "LogIn Successfully", Toast.LENGTH_SHORT).show();
+                UserManager.getInstance(SignInActivity.this).saveUserNamePassword(email, password);
+                Toast.makeText(SignInActivity.this, "LogIn Successfully", Toast.LENGTH_SHORT).show();
                 checkUserAccessLevel(authResult.getUser().getUid());
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(MainActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(SignInActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -144,27 +146,27 @@ public class MainActivity extends AppCompatActivity {
     private void checkUserAccessLevel(String uId) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
         DocumentReference documentReference = firestore.collection("User").document(firebaseUser.getUid());
-        documentReference.get().addOnSuccessListener(MainActivity.this, new OnSuccessListener<DocumentSnapshot>() {
+        documentReference.get().addOnSuccessListener(SignInActivity.this, new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                Log.d(MainActivity.class.getSimpleName(), "SuccessFull" + documentSnapshot.getData());
+                Log.d(SignInActivity.class.getSimpleName(), "SuccessFull" + documentSnapshot.getData());
 
                 if (documentSnapshot.getData() != null) {
                     String isAdmin = (String) documentSnapshot.getData().get("isAdmin");
                     if (isAdmin != null && isAdmin.equals("1")) {
 
-                        Log.d("Admin",""+UserManager.getInstance(MainActivity.this).getUserNameAndPassword().first);
+                        Log.d("Admin",""+UserManager.getInstance(SignInActivity.this).getUserNameAndPassword().first);
                         //user is Admin
-                        UserManager.getInstance(MainActivity.this).saveIsAdmin(true);
-                        startActivity(new Intent(MainActivity.this, Admin.class));
+                        UserManager.getInstance(SignInActivity.this).saveIsAdmin(true);
+                        startActivity(new Intent(SignInActivity.this, AdminActivity.class));
                     } else {
-                        UserManager.getInstance(MainActivity.this).saveIsAdmin(false);
-                        startActivity(new Intent(MainActivity.this, UserClientActivity.class));
+                        UserManager.getInstance(SignInActivity.this).saveIsAdmin(false);
+                        startActivity(new Intent(SignInActivity.this, UserActivity.class));
 
                     }
                 } else {
-                    UserManager.getInstance(MainActivity.this).saveIsAdmin(false);
-                    startActivity(new Intent(MainActivity.this, UserClientActivity.class));
+                    UserManager.getInstance(SignInActivity.this).saveIsAdmin(false);
+                    startActivity(new Intent(SignInActivity.this, UserActivity.class));
 
                 }
                 finish();

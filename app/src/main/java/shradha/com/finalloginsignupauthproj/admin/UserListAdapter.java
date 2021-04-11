@@ -1,4 +1,4 @@
-package shradha.com.finalloginsignupauthproj;
+package shradha.com.finalloginsignupauthproj.admin;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +12,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import shradha.com.finalloginsignupauthproj.util.Constants;
+import shradha.com.finalloginsignupauthproj.R;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserViewHolder> {
 

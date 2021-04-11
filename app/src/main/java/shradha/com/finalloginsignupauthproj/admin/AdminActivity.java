@@ -1,4 +1,4 @@
-package shradha.com.finalloginsignupauthproj;
+package shradha.com.finalloginsignupauthproj.admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,13 +19,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class Admin extends AppCompatActivity {
+import shradha.com.finalloginsignupauthproj.R;
+import shradha.com.finalloginsignupauthproj.signin.SignInActivity;
+import shradha.com.finalloginsignupauthproj.model.UserManager;
+
+public class AdminActivity extends AppCompatActivity {
     Button btn_LogOut;
     FirebaseAuth mAuth;
     FirebaseFirestore firestore;
@@ -55,8 +57,8 @@ public class Admin extends AppCompatActivity {
         btn_LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserManager.getInstance(Admin.this).logOut();
-                startActivity(new Intent(Admin.this, MainActivity.class));
+                UserManager.getInstance(AdminActivity.this).logOut();
+                startActivity(new Intent(AdminActivity.this, SignInActivity.class));
                 finish();
             }
         });
@@ -72,7 +74,7 @@ public class Admin extends AppCompatActivity {
                             userListAdapter.setList(documentSnapshots1);
 
                         } else {
-                            Log.d(Admin.class.getSimpleName(), "Error getting documents: ", task.getException());
+                            Log.d(AdminActivity.class.getSimpleName(), "Error getting documents: ", task.getException());
                         }
                     }
                 });

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/background"
     android:orientation="vertical"
-    tools:context=".Admin">
+    tools:context=".admin.AdminActivity">
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_LogOut"

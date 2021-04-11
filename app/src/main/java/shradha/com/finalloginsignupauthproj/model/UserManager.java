@@ -1,10 +1,12 @@
-package shradha.com.finalloginsignupauthproj;
+package shradha.com.finalloginsignupauthproj.model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Pair;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import shradha.com.finalloginsignupauthproj.util.Constants;
 
 public class UserManager {
     static UserManager userManager = null;
