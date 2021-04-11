@@ -9,5 +9,6 @@ public class Constants {
     public static final String KEY_SHARE_PREF_PASSWORD = "KEY_SHARE_PREF_PASSWORD";
     public static final String KEY_SHARE_PREF_IS_ADMIN = "KEY_SHARE_PREF_IS_ADMIN";
 
+    public static final String KEY_SHARE_PREF_IS_SHIFT_STARTED = "KEY_SHARE_PREF_IS_SHIFT_STARTED";
 
 }

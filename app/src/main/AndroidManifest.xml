@@ -10,6 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalLogInSignUpAuthProj">
         <activity android:name=".admin.AdminActivity"></activity>
+        <activity android:name=".admin.MapActivity"></activity>
+
         <activity android:name=".forgetpassword.ForgotPasswordActivity" />
         <activity android:name=".signup.SignUpActivity" />
         <activity android:name=".user.UserActivity" />

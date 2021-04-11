@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -30,6 +32,9 @@ public class UserActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     TextView tv_UserName;
     Button btn_User_LogOut;
+    LottieAnimationView lottieAnimationView;
+    LinearLayout shiftLayout;
+    Button shiftBUtton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,15 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         tv_UserName = findViewById(R.id.tv_UserName);
         btn_User_LogOut = findViewById(R.id.btn_User_LogOut);
+        lottieAnimationView = findViewById(R.id.animationView);
+        shiftLayout = findViewById(R.id.shiftLayout);
+        shiftBUtton = findViewById(R.id.shiftBUtton);
+
+        if(UserManager.getInstance(UserActivity.this).isShiftStarted()) {
+            lottieAnimationView.setVisibility(View.VISIBLE);
+            shiftLayout.setVisibility(View.GONE);
+        }
+
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -71,6 +85,15 @@ public class UserActivity extends AppCompatActivity {
             public void onClick(View v) {
                 UserManager.getInstance(UserActivity.this).logOut();
                 startActivity(new Intent(UserActivity.this, SignInActivity.class));
+            }
+        });
+
+        shiftBUtton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserManager.getInstance(UserActivity.this).saveIsShiftStarted(true);
+                lottieAnimationView.setVisibility(View.VISIBLE);
+                shiftLayout.setVisibility(View.GONE);
             }
         });
     }

@@ -9,10 +9,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import shradha.com.finalloginsignupauthproj.util.Constants;
 
 public class UserManager {
-    static UserManager userManager = null;
-    static Context mContext;
-    SharedPreferences sharedPreferences;
-
+    private static UserManager userManager = null;
+    private static Context mContext;
+    private SharedPreferences sharedPreferences;
     public static UserManager getInstance(Context context) {
         if (userManager == null) {
             mContext = context;
@@ -41,6 +40,20 @@ public class UserManager {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(Constants.KEY_SHARE_PREF_IS_ADMIN, isAdmin);
         editor.apply();
+    }
+
+
+    public void saveIsShiftStarted(Boolean isShiftStarted) {
+        sharedPreferences = mContext.getSharedPreferences(Constants.KEY_SHARE_PREF_CREDENTIAL, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Constants.KEY_SHARE_PREF_IS_SHIFT_STARTED, isShiftStarted);
+        editor.apply();
+    }
+
+    public Boolean isShiftStarted() {
+        sharedPreferences = mContext.getSharedPreferences(Constants.KEY_SHARE_PREF_CREDENTIAL, Context.MODE_PRIVATE);
+        Boolean isShiftStarted = sharedPreferences.getBoolean(Constants.KEY_SHARE_PREF_IS_SHIFT_STARTED, false);
+        return isShiftStarted;
     }
 
     public Boolean isAdmin() {
