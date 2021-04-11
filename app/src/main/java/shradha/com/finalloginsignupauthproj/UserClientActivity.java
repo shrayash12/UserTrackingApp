@@ -80,7 +80,7 @@ public class UserClientActivity extends AppCompatActivity {
         btn_User_LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+                UserManager.getInstance(UserClientActivity.this).logOut();
                 startActivity(new Intent(UserClientActivity.this, MainActivity.class));
             }
         });

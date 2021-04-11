@@ -46,13 +46,18 @@ public class Admin extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
-         documentReference = firestore.collection("User").document(firebaseUser.getUid());
+
+        if (firebaseUser != null && firebaseUser.getUid() != null) {
+            documentReference = firestore.collection("User").document(firebaseUser.getUid());
+
+        }
 
         btn_LogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
+                UserManager.getInstance(Admin.this).logOut();
                 startActivity(new Intent(Admin.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -63,7 +68,7 @@ public class Admin extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            List<DocumentSnapshot> documentSnapshots1 =  task.getResult().getDocuments();
+                            List<DocumentSnapshot> documentSnapshots1 = task.getResult().getDocuments();
                             userListAdapter.setList(documentSnapshots1);
 
                         } else {

@@ -8,7 +8,6 @@
     tools:context=".SignInActivity">
 
 
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,18 +54,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="10dp"
-                    android:textSize="18sp"
                     android:text="Sign Up"
-                    android:textColor="@color/text_color" />
+                    android:textColor="@color/text_color"
+                    android:textSize="18sp" />
 
 
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/textInputLayout.GrayLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                style="@style/textInputLayout.GrayLabel"
                 android:padding="10dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -74,17 +73,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:hint="Enter email"
                     android:inputType="textEmailAddress"
                     android:textColorHighlight="@color/text_color"
-                    android:textColorHint="@color/text_color"
-                    android:hint="Enter email" />
+                    android:textColorHint="@color/text_color" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/textInputLayout.GrayLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                style="@style/textInputLayout.GrayLabel"
                 android:padding="10dp">
 
                 <androidx.appcompat.widget.AppCompatEditText
@@ -92,10 +91,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
+                    android:hint="Enter password"
                     android:inputType="textPassword"
                     android:textColorHighlight="@color/text_color"
-                    android:textColorHint="@color/text_color"
-                    android:hint="Enter password" />
+                    android:textColorHint="@color/text_color" />
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -104,21 +103,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:textColor="@color/black"
                 android:layout_marginTop="20dp"
-                android:text="Forgot password?" />
+                android:text="Forgot password?"
+                android:textColor="@color/black" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_LogIn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:textColor="@color/white"
                 android:background="@color/button_background"
-                android:text="SIGN IN" />
+                android:text="SIGN IN"
+                android:textColor="@color/white" />
+
+
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+
 
 </FrameLayout>
