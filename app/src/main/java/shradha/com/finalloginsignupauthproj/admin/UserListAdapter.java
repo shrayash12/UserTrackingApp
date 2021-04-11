@@ -18,7 +18,6 @@ import shradha.com.finalloginsignupauthproj.R;
 
 public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserViewHolder> {
 
-
     private List<DocumentSnapshot> documents = new ArrayList<>();
 
     @NonNull

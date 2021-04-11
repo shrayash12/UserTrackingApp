@@ -44,12 +44,8 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up_new);
         already_account = findViewById(R.id.already_account);
-
-        User user;
         btn_SignUp = findViewById(R.id.btn_SignUp);
         firestore = FirebaseFirestore.getInstance();
-
-
         btn_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +53,6 @@ public class SignUpActivity extends AppCompatActivity {
             }
 
         });
-
         already_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,8 +104,6 @@ public class SignUpActivity extends AppCompatActivity {
             reg_Password.requestFocus();
             return;
         }
-
-        // Log.d(SignUpActivity.class.getSimpleName(), "SignUp Button Clicked");
         mAuth.createUserWithEmailAndPassword(reg_Email.getText().toString(),
                 reg_Password.getText().toString()).addOnSuccessListener(SignUpActivity.this, new OnSuccessListener<AuthResult>() {
             @Override

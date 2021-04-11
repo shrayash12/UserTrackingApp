@@ -42,8 +42,6 @@ public class SignInActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
 
 
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +55,6 @@ public class SignInActivity extends AppCompatActivity {
         if (!UserManager.getInstance(SignInActivity.this).getUserNameAndPassword().first.isEmpty()
                 && !UserManager.getInstance(SignInActivity.this).getUserNameAndPassword().second.isEmpty()) {
             if (UserManager.getInstance(SignInActivity.this).isAdmin()) {
-                //user is Admin
                 startActivity(new Intent(SignInActivity.this, AdminActivity.class));
                 finish();
             } else {
@@ -65,9 +62,6 @@ public class SignInActivity extends AppCompatActivity {
                 finish();
             }
         }
-
-
-        //  log_ProgressBar = findViewById(R.id.log_ProgressBar);
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -76,18 +70,14 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signInUser();
-                // Log.d(MainActivity.class.getSimpleName(), "btn_LogIn Clicked");
             }
         });
 
         log_Btn_Register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switch (v.getId()) {
-                    case R.id.log_Btn_Register:
-                        startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
-                        //Log.d(MainActivity.class.getSimpleName(), "btn Register clicked");
-                        break;
+                if (v.getId() == R.id.log_Btn_Register) {
+                    startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
                 }
             }
         });
@@ -124,8 +114,6 @@ public class SignInActivity extends AppCompatActivity {
             return;
         }
 
-        //    log_ProgressBar.setVisibility(View.VISIBLE);
-
         mAuth.signInWithEmailAndPassword(email, password).addOnSuccessListener(SignInActivity.this, new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
@@ -154,15 +142,11 @@ public class SignInActivity extends AppCompatActivity {
                 if (documentSnapshot.getData() != null) {
                     String isAdmin = (String) documentSnapshot.getData().get("isAdmin");
                     if (isAdmin != null && isAdmin.equals("1")) {
-
-                        Log.d("Admin",""+UserManager.getInstance(SignInActivity.this).getUserNameAndPassword().first);
-                        //user is Admin
                         UserManager.getInstance(SignInActivity.this).saveIsAdmin(true);
                         startActivity(new Intent(SignInActivity.this, AdminActivity.class));
                     } else {
                         UserManager.getInstance(SignInActivity.this).saveIsAdmin(false);
                         startActivity(new Intent(SignInActivity.this, UserActivity.class));
-
                     }
                 } else {
                     UserManager.getInstance(SignInActivity.this).saveIsAdmin(false);

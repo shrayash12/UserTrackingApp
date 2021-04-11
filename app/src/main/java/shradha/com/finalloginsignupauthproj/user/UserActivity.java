@@ -30,8 +30,6 @@ public class UserActivity extends AppCompatActivity {
     FirebaseFirestore firestore;
     TextView tv_UserName;
     Button btn_User_LogOut;
-    // TextView tv_UserAge;
-    // TextView tv_UserEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +37,6 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
         tv_UserName = findViewById(R.id.tv_UserName);
         btn_User_LogOut = findViewById(R.id.btn_User_LogOut);
-
-        // tv_UserAge = findViewById(R.id.tv_UserAge);
-        //  tv_UserEmail = findViewById(R.id.tv_UserEmail);
-
-        Toast.makeText(this, "Welcome User", Toast.LENGTH_SHORT).show();
-
         mAuth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
@@ -56,16 +48,10 @@ public class UserActivity extends AppCompatActivity {
                 DocumentSnapshot documentSnapshot = task.getResult();
                 if (task.isSuccessful()) {
                     if (documentSnapshot.exists()) {
-                        // Log.d(UserClientActivity.class.getSimpleName(), "DocumentSnapshot data: " + documentSnapshot.getData());
                         String userName = documentSnapshot.getString(Constants.KEY_NAME);
                         String userAge = documentSnapshot.getString(Constants.KEY_AGE);
                         String userEmail = documentSnapshot.getString(Constants.KEY_EMAIL);
-
                         tv_UserName.setText("Hello " + userName + ", Welcome to Scarlet It Solution");
-                        //tv_UserAge.setText(""+userAge);
-                        //  tv_UserEmail.setText(userEmail);
-
-
                     } else {
                         Log.d(UserActivity.class.getSimpleName(), "No such document");
                     }
@@ -73,7 +59,6 @@ public class UserActivity extends AppCompatActivity {
                     Log.d(UserActivity.class.getSimpleName(), "get failed with ", task.getException());
 
                 }
-
             }
         }).addOnFailureListener(UserActivity.this, new OnFailureListener() {
             @Override
