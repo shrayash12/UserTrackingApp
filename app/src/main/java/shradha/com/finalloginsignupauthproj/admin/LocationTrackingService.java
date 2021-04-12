@@ -78,6 +78,8 @@ public class LocationTrackingService  extends Service {
 
                     Location lastLocation = locationResult.getLastLocation();
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+
                     DatabaseReference ref = database.getReference().child("location").child("device1");
 
 
@@ -87,6 +89,8 @@ public class LocationTrackingService  extends Service {
                     data.put("time", lastLocation.getTime());
                     data.put("time", lastLocation.getTime());
                     data.put("uuid", uuid);
+
+
                     ref.setValue(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
