@@ -114,9 +114,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Log.w(MapsActivity.class.getSimpleName(), "Key:" + currentLatLng);
                 mMap.addMarker(new MarkerOptions()
                         .position(currentLatLng)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_location))
                         .title("Delivery"));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 16));
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 18));
             }
 
         }

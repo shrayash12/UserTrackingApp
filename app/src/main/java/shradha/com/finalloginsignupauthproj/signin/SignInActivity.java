@@ -30,6 +30,7 @@ import shradha.com.finalloginsignupauthproj.signup.SignUpActivity;
 import shradha.com.finalloginsignupauthproj.user.UserActivity;
 import shradha.com.finalloginsignupauthproj.model.UserManager;
 import shradha.com.finalloginsignupauthproj.admin.AdminActivity;
+import shradha.com.finalloginsignupauthproj.util.Constants;
 
 public class SignInActivity extends AppCompatActivity {
     EditText log_EmailAddress;
@@ -145,18 +146,23 @@ public class SignInActivity extends AppCompatActivity {
                         UserManager.getInstance(SignInActivity.this).saveIsAdmin(true);
                         startActivity(new Intent(SignInActivity.this, AdminActivity.class));
                     } else {
-                        UserManager.getInstance(SignInActivity.this).saveIsAdmin(false);
-                        startActivity(new Intent(SignInActivity.this, UserActivity.class));
+                        goToUserActivity(uId);
                     }
                 } else {
-                    UserManager.getInstance(SignInActivity.this).saveIsAdmin(false);
-                    startActivity(new Intent(SignInActivity.this, UserActivity.class));
+                    goToUserActivity(uId);
 
                 }
                 finish();
             }
         });
 
+    }
+
+    private void goToUserActivity(String uuid) {
+        UserManager.getInstance(SignInActivity.this).saveIsAdmin(false);
+       Intent intent = new Intent(SignInActivity.this, UserActivity.class);
+       intent.putExtra(Constants.KEY_UID,uuid);
+        startActivity(intent);
     }
 
 }

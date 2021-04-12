@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import shradha.com.finalloginsignupauthproj.Maps2Activity;
 import shradha.com.finalloginsignupauthproj.util.Constants;
 import shradha.com.finalloginsignupauthproj.R;
 
@@ -57,7 +58,7 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserVi
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(context, MapActivity.class);
+                    Intent intent = new Intent(context, MapsActivity.class);
                     context.startActivity(intent);
                 }
             });

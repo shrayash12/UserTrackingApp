@@ -22,6 +22,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import shradha.com.finalloginsignupauthproj.admin.LocationTrackingService;
 import shradha.com.finalloginsignupauthproj.util.Constants;
 import shradha.com.finalloginsignupauthproj.R;
 import shradha.com.finalloginsignupauthproj.model.UserManager;
@@ -39,6 +40,10 @@ public class UserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String uiid  = getIntent().getStringExtra(Constants.KEY_UID);
+        Intent intent = new Intent(UserActivity.this, LocationTrackingService.class);
+        intent.putExtra(Constants.KEY_UID,uiid);
+        startService(intent);
         setContentView(R.layout.activity_user);
         tv_UserName = findViewById(R.id.tv_UserName);
         btn_User_LogOut = findViewById(R.id.btn_User_LogOut);
@@ -84,6 +89,7 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 UserManager.getInstance(UserActivity.this).logOut();
+                finishService();
                 startActivity(new Intent(UserActivity.this, SignInActivity.class));
             }
         });
@@ -97,4 +103,15 @@ public class UserActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void finishService() {
+        stopService(new Intent(UserActivity.this,LocationTrackingService.class));
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        finishService();
+
+    }
+
 }

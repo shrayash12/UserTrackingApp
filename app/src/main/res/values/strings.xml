@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">FinalLogInSignUpAuthProj</string>
+    <string name="channel_id">String</string>
+    <string name="action_stop">String</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps2">Map</string>
 </resources>

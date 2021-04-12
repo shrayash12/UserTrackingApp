@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "789212493548",
+    "firebase_url": "https://auth-17b8a-default-rtdb.firebaseio.com",
+    "project_id": "auth-17b8a",
+    "storage_bucket": "auth-17b8a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789212493548:android:6430d3a572b1bbe9bf57c9",
+        "android_client_info": {
+          "package_name": "shradha.com.finalloginsignupauthproj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789212493548-bbetkguqrk5hc2t9eo6eoqb08d2s459t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Pqv-KO6GDtA3Kk8olXOsRSxlYttaLZM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789212493548-bbetkguqrk5hc2t9eo6eoqb08d2s459t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

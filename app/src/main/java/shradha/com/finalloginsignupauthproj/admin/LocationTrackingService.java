@@ -20,6 +20,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import shradha.com.finalloginsignupauthproj.util.Constants;
+
 public class LocationTrackingService  extends Service {
     private FusedLocationProviderClient mLocationProviderClient;
     private LocationCallback locationUpdatesCallback;
@@ -50,10 +52,11 @@ public class LocationTrackingService  extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String keyValue = intent.getStringExtra("key");
+        String uiid = intent.getStringExtra(Constants.KEY_UID);
         if(keyValue!=null && keyValue.equals("stop")){
             stopSelf();
         }else {
-            setUpLocationUpdatesCallback();
+            setUpLocationUpdatesCallback(uiid);
             mLocationProviderClient.requestLocationUpdates(locationRequest, locationUpdatesCallback, null);
         }
         return START_STICKY;
@@ -67,7 +70,7 @@ public class LocationTrackingService  extends Service {
         LocationNotification.cancel(this);
         mLocationProviderClient.removeLocationUpdates(locationUpdatesCallback);
     }
-    private void setUpLocationUpdatesCallback() {
+    private void setUpLocationUpdatesCallback(String uuid) {
         locationUpdatesCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -82,6 +85,8 @@ public class LocationTrackingService  extends Service {
                     data.put("latitude", lastLocation.getLatitude());
                     data.put("longitude", lastLocation.getLongitude());
                     data.put("time", lastLocation.getTime());
+                    data.put("time", lastLocation.getTime());
+                    data.put("uuid", uuid);
                     ref.setValue(data).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
@@ -89,8 +94,8 @@ public class LocationTrackingService  extends Service {
                             Log.i("tag", "Location update saved");
                         }
                     });
-                    LocationNotification.notify(LocationTrackingService.this, "Location Tracking",
-                            "Lat:" + lastLocation.getLatitude() + " - Lng:" + lastLocation.getLongitude());
+                    /*LocationNotification.notify(LocationTrackingService.this, "Location Tracking",
+                            "Lat:" + lastLocation.getLatitude() + " - Lng:" + lastLocation.getLongitude());*/
                 }else{
                     Log.i("tag", "Location null");
                 }

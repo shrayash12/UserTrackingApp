@@ -76,7 +76,7 @@ public class LocationTrackActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, RC_LOCATION_REQUEST);
         } else {
-            //startService(new Intent(this, LocationTrackerService.class));
+            startService(new Intent(this, LocationTrackingService.class));
         }
     }
 
