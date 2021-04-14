@@ -36,14 +36,13 @@ public class UserActivity extends AppCompatActivity {
     LottieAnimationView lottieAnimationView;
     LinearLayout shiftLayout;
     Button shiftBUtton;
+    String uuid = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String uiid  = getIntent().getStringExtra(Constants.KEY_UID);
-        Intent intent = new Intent(UserActivity.this, LocationTrackingService.class);
-        intent.putExtra(Constants.KEY_UID,uiid);
-        startService(intent);
+        uuid = getIntent().getStringExtra(Constants.KEY_UID);
+
         setContentView(R.layout.activity_user);
         tv_UserName = findViewById(R.id.tv_UserName);
         btn_User_LogOut = findViewById(R.id.btn_User_LogOut);
@@ -67,9 +66,15 @@ public class UserActivity extends AppCompatActivity {
                 DocumentSnapshot documentSnapshot = task.getResult();
                 if (task.isSuccessful()) {
                     if (documentSnapshot.exists()) {
+
                         String userName = documentSnapshot.getString(Constants.KEY_NAME);
-                        String userAge = documentSnapshot.getString(Constants.KEY_AGE);
                         String userEmail = documentSnapshot.getString(Constants.KEY_EMAIL);
+
+                        Intent intent = new Intent(UserActivity.this, LocationTrackingService.class);
+                        intent.putExtra(Constants.KEY_EMAIL,userEmail);
+                        intent.putExtra(Constants.KEY_UID,uuid);
+                        startService(intent);
+                        String userAge = documentSnapshot.getString(Constants.KEY_AGE);
                         tv_UserName.setText("Hello " + userName + ", Welcome to Scarlet It Solution");
                     } else {
                         Log.d(UserActivity.class.getSimpleName(), "No such document");

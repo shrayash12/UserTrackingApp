@@ -46,6 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
         already_account = findViewById(R.id.already_account);
         btn_SignUp = findViewById(R.id.btn_SignUp);
         firestore = FirebaseFirestore.getInstance();
+
         btn_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

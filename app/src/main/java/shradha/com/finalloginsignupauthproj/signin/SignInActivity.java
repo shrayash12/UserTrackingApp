@@ -160,8 +160,8 @@ public class SignInActivity extends AppCompatActivity {
 
     private void goToUserActivity(String uuid) {
         UserManager.getInstance(SignInActivity.this).saveIsAdmin(false);
-       Intent intent = new Intent(SignInActivity.this, UserActivity.class);
-       intent.putExtra(Constants.KEY_UID,uuid);
+        Intent intent = new Intent(SignInActivity.this, UserActivity.class);
+        intent.putExtra(Constants.KEY_UID,uuid);
         startActivity(intent);
     }
 

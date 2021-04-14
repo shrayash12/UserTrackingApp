@@ -52,11 +52,13 @@ public class LocationTrackingService  extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         String keyValue = intent.getStringExtra("key");
+        String email = intent.getStringExtra(Constants.KEY_EMAIL);
         String uiid = intent.getStringExtra(Constants.KEY_UID);
+
         if(keyValue!=null && keyValue.equals("stop")){
             stopSelf();
         }else {
-            setUpLocationUpdatesCallback(uiid);
+            setUpLocationUpdatesCallback(uiid, email);
             mLocationProviderClient.requestLocationUpdates(locationRequest, locationUpdatesCallback, null);
         }
         return START_STICKY;
@@ -70,7 +72,7 @@ public class LocationTrackingService  extends Service {
         LocationNotification.cancel(this);
         mLocationProviderClient.removeLocationUpdates(locationUpdatesCallback);
     }
-    private void setUpLocationUpdatesCallback(String uuid) {
+    private void setUpLocationUpdatesCallback(String uuid, String  email) {
         locationUpdatesCallback = new LocationCallback(){
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -80,7 +82,7 @@ public class LocationTrackingService  extends Service {
                     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
 
-                    DatabaseReference ref = database.getReference().child("location").child("device1");
+                    DatabaseReference ref = database.getReference().child("location").child("user");
 
 
                     Map<String, Object> data = new HashMap<>();
