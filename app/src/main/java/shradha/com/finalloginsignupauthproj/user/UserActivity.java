@@ -30,12 +30,12 @@ import shradha.com.finalloginsignupauthproj.signin.SignInActivity;
 
 public class UserActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
-    FirebaseFirestore firestore;
+    FirebaseFirestore fireStore;
     TextView tv_UserName;
     Button btn_User_LogOut;
     LottieAnimationView lottieAnimationView;
     LinearLayout shiftLayout;
-    Button shiftBUtton;
+    Button shiftButton;
     String uuid = "";
 
     @Override
@@ -48,7 +48,7 @@ public class UserActivity extends AppCompatActivity {
         btn_User_LogOut = findViewById(R.id.btn_User_LogOut);
         lottieAnimationView = findViewById(R.id.animationView);
         shiftLayout = findViewById(R.id.shiftLayout);
-        shiftBUtton = findViewById(R.id.shiftBUtton);
+        shiftButton = findViewById(R.id.shiftBUtton);
 
         if(UserManager.getInstance(UserActivity.this).isShiftStarted()) {
             lottieAnimationView.setVisibility(View.VISIBLE);
@@ -56,9 +56,9 @@ public class UserActivity extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+        fireStore = FirebaseFirestore.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        DocumentReference documentReference = firestore.collection("User").document(firebaseUser.getUid());
+        DocumentReference documentReference = fireStore.collection("User").document(firebaseUser.getUid());
 
         documentReference.get().addOnCompleteListener(UserActivity.this, new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -99,7 +99,7 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        shiftBUtton.setOnClickListener(new View.OnClickListener() {
+        shiftButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 UserManager.getInstance(UserActivity.this).saveIsShiftStarted(true);
