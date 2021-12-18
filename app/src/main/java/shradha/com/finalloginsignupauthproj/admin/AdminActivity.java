@@ -30,7 +30,7 @@ import shradha.com.finalloginsignupauthproj.model.UserManager;
 public class AdminActivity extends AppCompatActivity {
     Button btn_LogOut;
     FirebaseAuth mAuth;
-    FirebaseFirestore firestore;
+    FirebaseFirestore fireStore;
     DocumentReference documentReference;
     RecyclerView recyclerView;
     UserListAdapter userListAdapter;
@@ -46,11 +46,11 @@ public class AdminActivity extends AppCompatActivity {
         Toast.makeText(this, "Welcome Admin!!!!", Toast.LENGTH_SHORT).show();
         btn_LogOut = findViewById(R.id.btn_LogOut);
         mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+        fireStore = FirebaseFirestore.getInstance();
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
 
         if (firebaseUser != null && firebaseUser.getUid() != null) {
-            documentReference = firestore.collection("User").document(firebaseUser.getUid());
+            documentReference = fireStore.collection("User").document(firebaseUser.getUid());
 
         }
 
@@ -64,7 +64,7 @@ public class AdminActivity extends AppCompatActivity {
         });
 
 
-        firestore.collection("User")
+        fireStore.collection("User")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

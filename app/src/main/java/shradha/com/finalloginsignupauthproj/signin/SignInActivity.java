@@ -39,7 +39,7 @@ public class SignInActivity extends AppCompatActivity {
     TextView log_Tv_ForgotPassword;
     TextView log_Btn_Register;
     private FirebaseAuth mAuth;
-    FirebaseFirestore firestore;
+    FirebaseFirestore fireStore;
     FirebaseUser firebaseUser;
 
 
@@ -57,14 +57,13 @@ public class SignInActivity extends AppCompatActivity {
                 && !UserManager.getInstance(SignInActivity.this).getUserNameAndPassword().second.isEmpty()) {
             if (UserManager.getInstance(SignInActivity.this).isAdmin()) {
                 startActivity(new Intent(SignInActivity.this, AdminActivity.class));
-                finish();
             } else {
                 startActivity(new Intent(SignInActivity.this, UserActivity.class));
-                finish();
             }
+            finish();
         }
         mAuth = FirebaseAuth.getInstance();
-        firestore = FirebaseFirestore.getInstance();
+        fireStore = FirebaseFirestore.getInstance();
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         btn_LogIn.setOnClickListener(new View.OnClickListener() {
@@ -134,7 +133,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void checkUserAccessLevel(String uId) {
         FirebaseUser firebaseUser = mAuth.getCurrentUser();
-        DocumentReference documentReference = firestore.collection("User").document(firebaseUser.getUid());
+        DocumentReference documentReference = fireStore.collection("User").document(firebaseUser.getUid());
         documentReference.get().addOnSuccessListener(SignInActivity.this, new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
