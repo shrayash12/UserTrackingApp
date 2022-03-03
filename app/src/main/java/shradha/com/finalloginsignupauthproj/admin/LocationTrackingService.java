@@ -53,12 +53,12 @@ public class LocationTrackingService  extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         String keyValue = intent.getStringExtra("key");
         String email = intent.getStringExtra(Constants.KEY_EMAIL);
-        String uiid = intent.getStringExtra(Constants.KEY_UID);
+        String uiId = intent.getStringExtra(Constants.KEY_UID);
 
         if(keyValue!=null && keyValue.equals("stop")){
             stopSelf();
         }else {
-            setUpLocationUpdatesCallback(uiid, email);
+            setUpLocationUpdatesCallback(uiId, email);
             mLocationProviderClient.requestLocationUpdates(locationRequest, locationUpdatesCallback, null);
         }
         return START_STICKY;

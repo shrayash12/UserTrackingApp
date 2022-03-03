@@ -25,7 +25,6 @@ import java.util.Map;
 
 import shradha.com.finalloginsignupauthproj.util.Constants;
 import shradha.com.finalloginsignupauthproj.R;
-import shradha.com.finalloginsignupauthproj.model.User;
 import shradha.com.finalloginsignupauthproj.signin.SignInActivity;
 
 public class SignUpActivity extends AppCompatActivity {
